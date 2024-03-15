@@ -33,19 +33,19 @@ class HAM10000Dataset(data.Dataset):
       image_label_dict[id] = label
       class_counts[label] += 1
 
-    # self.items is a list of tuples like: [ ('ISIC_0034317', 1), ('ISIC_0034315', 5), ... ]
-    self.items = list(image_label_dict.items())
+    # self.samples is a list of tuples like: [ ('ISIC_0034317', 1), ('ISIC_0034315', 5), ... ]
+    self.samples = list(image_label_dict.items())
     self.class_counts = class_counts
     print(f"Class counts:", class_counts)
 
   def __len__(self):
-    return len(self.items)
+    return len(self.samples)
 
   def __getitem__(self, idx):
-    img_path = os.path.join(self.img_dir, f"{self.items[idx][0]}.jpg")
+    img_path = os.path.join(self.img_dir, f"{self.samples[idx][0]}.jpg")
     image = Image.open(img_path)
 
-    label = self.items[idx][1]
+    label = self.samples[idx][1]
 
     if self.transform:
         image = self.transform(image)
