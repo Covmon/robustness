@@ -8,7 +8,7 @@ from robustness import imagenet_models
 from PIL import Image
 
 target_transform_ham = ch.Tensor
-ALL_CLASSES_HAM10000 = ['bkl' 'nv' 'df' 'mel' 'vasc' 'bcc' 'akiec']
+ALL_CLASSES_HAM10000 = ['bkl', 'nv', 'df', 'mel', 'vasc', 'bcc', 'akiec']
 
 class HAM10000Dataset(data.Dataset):
   def __init__(self, root, train=True, train_labels_df=None, val_labels_df=None, transform=None, target_transform=None, **kwargs):

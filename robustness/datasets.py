@@ -493,7 +493,7 @@ class HAM10000(DataSet):
     """
 
     def __init__(self, data_path, train_labels_df, val_labels_df, **kwargs):
-        all_classes = ['bkl' 'nv' 'df' 'mel' 'vasc' 'bcc' 'akiec']
+        all_classes = ['bkl', 'nv', 'df', 'mel', 'vasc', 'bcc', 'akiec']
         label_mapping = { cls_code: i for i, cls_code in enumerate(all_classes) }
 
         ds_kwargs = {
