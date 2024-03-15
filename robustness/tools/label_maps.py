@@ -1,4 +1,6 @@
 CLASS_DICT = {
+          'HAM10000': {0: 'bkl', 1: 'nv', 2: 'df',
+                    3: 'mel', 4: 'vasc', 5: 'bcc', 6: 'akiec'},
           'CIFAR': {-1: 'noise', 0: 'airplane', 1: 'automobile', 
                    2: 'bird', 3: 'cat', 4: 'deer', 
                    5: 'dog', 6: 'frog', 7: 'horse', 

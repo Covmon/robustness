@@ -24,6 +24,7 @@ from torchvision import transforms, datasets
 
 from .tools import constants
 from .tools import openimgs_helpers
+from .tools import ham10000_helpers
 from . import data_augmentation as da
 from . import loaders
 
@@ -486,6 +487,35 @@ class OpenImages(DataSet):
             raise ValueError('OpenImages does not support pytorch_pretrained=True')
         return imagenet_models.__dict__[arch](num_classes=self.num_classes)
 
+class HAM10000(DataSet):
+    """
+    HAM10000 skin lesion dataset
+    """
+
+    def __init__(self, data_path, train_labels_df, val_labels_df, **kwargs):
+        all_classes = ['bkl' 'nv' 'df' 'mel' 'vasc' 'bcc' 'akiec']
+        label_mapping = { cls_code: i for i, cls_code in enumerate(all_classes) }
+
+        ds_kwargs = {
+            'num_classes': 7,
+            'mean': ch.tensor([0.7644, 0.5390, 0.5623]),
+            'std': ch.tensor([0.0876, 0.1207, 0.1361]),
+            'custom_class': ham10000_helpers.HAM10000Dataset,
+            'custom_class_args': {
+                'train_labels_df': train_labels_df,
+                'val_labels_df': val_labels_df
+            },
+            'label_mapping': label_mapping, 
+            'transform_train': da.TRAIN_TRANSFORMS_IMAGENET,
+            'transform_test': da.TEST_TRANSFORMS_IMAGENET
+        }
+        ds_kwargs = self.override_args(ds_kwargs, kwargs)
+        super(HAM10000, self).__init__('ham10000', data_path, **ds_kwargs)
+
+    def get_model(self, arch, pretrained):
+        return imagenet_models.__dict__[arch](num_classes=self.num_classes, 
+                                        pretrained=pretrained)
+    
 DATASETS = {
     'imagenet': ImageNet,
     'restricted_imagenet': RestrictedImageNet,
@@ -494,7 +524,8 @@ DATASETS = {
     'cinic': CINIC,
     'a2b': A2B,
     'places365': Places365,
-    'openimages': OpenImages
+    'openimages': OpenImages,
+    'ham10000': HAM10000
 }
 '''
 Dictionary of datasets. A dataset class can be accessed as:
