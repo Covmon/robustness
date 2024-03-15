@@ -11,7 +11,7 @@ target_transform_ham = ch.Tensor
 ALL_CLASSES_HAM10000 = ['bkl' 'nv' 'df' 'mel' 'vasc' 'bcc' 'akiec']
 
 class HAM10000Dataset(data.Dataset):
-  def __init__(self, root, train=True, train_labels_df=None, val_labels_df=None, transform=None, target_transform=None):
+  def __init__(self, root, train=True, train_labels_df=None, val_labels_df=None, transform=None, target_transform=None, **kwargs):
     self.img_dir = root
     self.transform = transform
     self.target_transform = target_transform
